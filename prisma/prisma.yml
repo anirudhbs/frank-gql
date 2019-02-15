@@ -1,0 +1,11 @@
+# http end point for the Prisma API
+#endpoint: ""
+endpoint: https://eu1.prisma.sh/anirudh-eccc1f/frank-gql/dev
+
+datamodel: datamodel.prisma
+
+# specify language & location for the prisma client
+# that will be generated
+generate:
+  - generator: javascript-client
+    output: ../src/generated/prisma-client

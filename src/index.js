@@ -2,11 +2,27 @@ const { GraphQLServer } = require("graphql-yoga")
 const { generate } = require("shortid")
 
 const { links } = require("./dummy-apis")
+const { prisma } = require("./generated/prisma-client")
 
 // String! means info can never be null
 
 // Every GraphQL schema has three special root types,
 // these are called Query, Mutation and Subscription
+
+async function main() {
+  const link = await prisma.createLink({
+    url: "free21savage.org",
+    description: "#Free21"
+  })
+  console.log(`created new Link ${link.id}`)
+
+  const allLinks = await prisma.links()
+  console.log(allLinks)
+}
+
+main().catch(err => {
+  console.log(err)
+})
 
 const resolvers = {
   Query: {
