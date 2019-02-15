@@ -14,8 +14,9 @@
     "nodemon": "^1.18.10"
   },
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "graphql-yoga": "^1.17.4",
-    "prisma": "^1.26.4",
-    "shortid": "^2.2.14"
+    "jsonwebtoken": "^8.4.0",
+    "prisma-client-lib": "^1.26.5"
   }
 }

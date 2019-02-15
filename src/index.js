@@ -2,6 +2,11 @@ const { GraphQLServer } = require("graphql-yoga")
 
 const { prisma } = require("./generated/prisma-client")
 
+const Query = require("./resolvers/Query")
+const Mutation = require("./resolvers/Mutation")
+const User = require("./resolvers/User")
+const Link = require("./resolvers/Link")
+
 // String! means info can never be null
 
 // Every GraphQL schema has three special root types,
@@ -24,24 +29,18 @@ main().catch(err => {
 })
 
 const resolvers = {
-  Query: {
-    info: () => "Frank Ocean says Hello!",
-    feed: (root, args, context) => {
-      return context.prisma.links()
-    }
-  },
-  Mutation: {
-    post: (root, args, context) => {
-      const { url, description } = args
-      return context.prisma.createLink({ url, description })
-    }
-  }
+  Query,
+  Mutation,
+  User,
+  Link
 }
 
 const server = new GraphQLServer({
   typeDefs: "./src/schema.graphql",
   resolvers,
-  context: { prisma }
+  context: request => {
+    return { ...request, prisma }
+  }
 })
 
 server.start(() => {
