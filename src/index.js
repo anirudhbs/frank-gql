@@ -24,6 +24,27 @@ const resolvers = {
       }
       links.push(link)
       return link
+    },
+    delete: (parent, args) => {
+      const { id } = args
+      const indexOfLink = links.findIndex(link => link.id === id)
+      const link = links[indexOfLink]
+      links.splice(indexOfLink, 1)
+      return link // return type has to be Link, as specified in schema
+    },
+    update: (parent, args) => {
+      const { id, url = null, description = null } = args
+      const indexOfLink = links.findIndex(link => link.id === id)
+
+      if (url !== null) {
+        links[indexOfLink].url = url
+      }
+
+      if (description !== null) {
+        links[indexOfLink].description = description
+      }
+
+      return links[indexOfLink]
     }
   }
 }
