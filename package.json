@@ -1,0 +1,17 @@
+{
+  "name": "frank-gql",
+  "version": "0.0.1",
+  "description": "Learning GraphQL",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "author": "anirudhbs",
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^5.13.0"
+  },
+  "dependencies": {
+    "graphql-yoga": "^1.17.4"
+  }
+}
