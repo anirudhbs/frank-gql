@@ -11,7 +11,8 @@ const { links } = require("./dummy-apis")
 const resolvers = {
   Query: {
     info: () => "Frank Ocean says Hello!",
-    feed: () => links
+    feed: () => links,
+    link: (parent, args) => links.filter(link => link.id === args.id)[0]
   },
   Mutation: {
     post: (parent, args) => {
