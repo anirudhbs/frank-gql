@@ -1,18 +1,7 @@
 const { GraphQLServer } = require("graphql-yoga")
+const { generate } = require("shortid")
+
 const { links } = require("./dummy-apis")
-
-const typeDefs = `
-type Query {
-  info: String!
-  feed: [Link!]!
-}
-
-type Link {
-  id: ID!
-  url: String!
-  description: String!
-}
-`
 
 // String! means info can never be null
 
@@ -24,15 +13,22 @@ const resolvers = {
     info: () => "Frank Ocean says Hello!",
     feed: () => links
   },
-  Link: {
-    id: parent => parent.id,
-    url: parent => parent.url,
-    description: parent => parent.description
+  Mutation: {
+    post: (parent, args) => {
+      const { description, url } = args
+      const link = {
+        id: `${generate()}`,
+        url,
+        description
+      }
+      links.push(link)
+      return link
+    }
   }
 }
 
 const server = new GraphQLServer({
-  typeDefs,
+  typeDefs: "./src/schema.graphql",
   resolvers
 })
 
