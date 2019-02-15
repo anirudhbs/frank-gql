@@ -7,6 +7,7 @@ const Mutation = require("./resolvers/Mutation")
 const User = require("./resolvers/User")
 const Link = require("./resolvers/Link")
 const Subscription = require("./resolvers/Subscription")
+const Vote = require("./resolvers/Vote")
 
 // String! means info can never be null
 
@@ -24,7 +25,8 @@ const resolvers = {
   Mutation,
   User,
   Link,
-  Subscription
+  Subscription,
+  Vote
 }
 
 const server = new GraphQLServer({
