@@ -1,5 +1,4 @@
 const { GraphQLServer } = require("graphql-yoga")
-const { generate } = require("shortid")
 
 const { links } = require("./dummy-apis")
 const { prisma } = require("./generated/prisma-client")
@@ -14,10 +13,11 @@ async function main() {
     url: "free21savage.org",
     description: "#Free21"
   })
+
   console.log(`created new Link ${link.id}`)
 
   const allLinks = await prisma.links()
-  console.log(allLinks)
+  console.log(allLinks.length)
 }
 
 main().catch(err => {
@@ -27,19 +27,15 @@ main().catch(err => {
 const resolvers = {
   Query: {
     info: () => "Frank Ocean says Hello!",
-    feed: () => links,
+    feed: (root, args, context) => {
+      return context.prisma.links()
+    },
     link: (parent, args) => links.filter(link => link.id === args.id)[0]
   },
   Mutation: {
-    post: (parent, args) => {
-      const { description, url } = args
-      const link = {
-        id: `${generate()}`,
-        url,
-        description
-      }
-      links.push(link)
-      return link
+    post: (root, args, context) => {
+      const { url, description } = args
+      return context.prisma.createLink({ url, description })
     },
     delete: (parent, args) => {
       const { id } = args
@@ -67,7 +63,8 @@ const resolvers = {
 
 const server = new GraphQLServer({
   typeDefs: "./src/schema.graphql",
-  resolvers
+  resolvers,
+  context: { prisma }
 })
 
 server.start(() => {
