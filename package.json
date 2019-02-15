@@ -4,12 +4,14 @@
   "description": "Learning GraphQL",
   "main": "src/index.js",
   "scripts": {
-    "start": "node src/index.js"
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js"
   },
   "author": "anirudhbs",
   "license": "MIT",
   "devDependencies": {
-    "eslint": "^5.13.0"
+    "eslint": "^5.13.0",
+    "nodemon": "^1.18.10"
   },
   "dependencies": {
     "graphql-yoga": "^1.17.4"
